@@ -1,0 +1,130 @@
+body {
+    font-family: monospace;
+    scroll-behavior: smooth;
+    margin: 0;
+    padding: 0;
+}
+
+#topToolbar {
+
+}
+
+.image-circle-wrapper {
+    margin: 4px;
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+}
+
+.image-circle-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+#contentForm {
+    flex-wrap: wrap;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+}
+
+#containerDiv {
+    display: flex;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+#containerDiv .card {
+    border-radius: 10px;
+}
+
+.card {
+    border: 1px solid darkgray;
+    margin: 10px;
+    padding: 15px;
+    width: 180px;
+    height: 200px;
+    overflow: auto;
+    position: relative;
+}
+
+
+.card::-webkit-scrollbar {
+    display: none;
+}
+
+
+#taskTextBox {
+
+}
+
+.noteContent {
+    scroll-behavior: smooth;
+}
+
+.card > span {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    cursor: pointer;
+}
+
+.timeContainer {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+}
+
+#title > p {
+    font-family: titleFont;
+}
+
+#title {
+    display: flex;
+    justify-content: center;
+}
+
+@font-face {
+    font-family: titleFont;
+    src: url(GloriaHallelujah-Regular.ttf); format('truetype');
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
