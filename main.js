@@ -5,10 +5,10 @@ let noteList = []
 const taskTextBox = document.getElementById("taskTextBox")
 const timeTextBox = document.getElementById("timeTextBox")
 
-function addToDo() {
+function addNote() {
 
     pushToDo()
-    displayToDoList()
+    displayNoteList()
     clearForm()
 }
 
@@ -21,10 +21,10 @@ function pushToDo() {
     if (isValidFields(note)) {
         noteList.push(note)
     }
-    saveData()
+    saveAndUpdateNote()
 }
 
-function displayToDoList() {
+function displayNoteList() {
 
     const containerDiv = document.getElementById("containerDiv")
     let dynamicDivInstance = ""
@@ -33,7 +33,9 @@ function displayToDoList() {
         const noteCard =
             `
             <div class="card" style="background-color: ${randColor}">
-            <span onclick="deleteMe(${i})">❌</span>
+        
+            <span class="bi bi-trash" onclick="deleteNote(${i})"></span>
+           
             <div class="noteContent">${noteList[i].task}</div>
            
            <p class="timeContainer"> ${parseTime(noteList[i].time)} </p>
@@ -45,10 +47,12 @@ function displayToDoList() {
     containerDiv.innerHTML = dynamicDivInstance
 }
 
-function deleteMe(index) {
-    noteList.splice(index, 1)
-    displayToDoList()
+function deleteNote(note) {
+    noteList.splice(note, 1)
+    saveAndUpdateNote()
+    displayNoteList()
 }
+
 
 function clearForm() {
     taskTextBox.value = ""
@@ -56,25 +60,24 @@ function clearForm() {
     taskTextBox.focus()
 }
 
-function saveData() {
+function saveAndUpdateNote() {
     const json = JSON.stringify(noteList)
     localStorage.setItem("todolist", json)
-    console.log(json)
 }
 
-function loadData() {
+function loadNote() {
     const json = localStorage.getItem("todolist")
     if (json) {
         noteList = JSON.parse(json)
     }
-    displayToDoList()
+    displayNoteList()
 }
 
 function isValidFields(todo) {
     return todo.task !== "" && todo.time.toString().trim() !== ""
 }
 
-loadData();
+loadNote();
 
 function parseTime(todoItemTime) {
     return todoItemTime.replace('T', ' ')
@@ -82,22 +85,22 @@ function parseTime(todoItemTime) {
 
 function getColor() {
     const colorNames = [
-        `lavender`,
-        `thistle`,
-        `plum`,
-        `lightpink`,
-        `mistyrose`,
-        `honeydew`,
-        `mintcream`,
-        `aliceblue`,
-        `seashell`,
-        `floralwhite`,
-        `lightyellow`,
-        `powderblue`,
-        `lightblue`,
-        `lightcyan`,
-        `palegreen`,
-        `peachpuff`
+        `lavenderblush`, // soft pink
+        `salmon`, // warm pink-orange
+        `lightsalmon`, // orange tint
+        `lightcoral`, // muted red
+        `gold`, // warm yellow
+        `khaki`, // dusty yellow
+        `palegreen`, // fresh green
+        `mediumaquamarine`, // teal green
+        `powderblue`, // light blue
+        `lightsteelblue`, // cool blue-gray
+        `skyblue`, // clear light blue
+        `plum`, // soft purple
+        `thistle`, // light purple
+        `lightpink`, // soft pink
+        `peachpuff`, // peachy
+        `honeydew` // pale mint
     ]
 
     let i = Math.floor(Math.random() * 16)
