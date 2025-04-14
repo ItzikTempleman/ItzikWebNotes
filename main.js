@@ -1,23 +1,25 @@
 "use-strict";
 
-
+let defaultTimeValue = ""
 let noteList = []
-const taskTextBox = document.getElementById("taskTextBox")
-const timeTextBox = document.getElementById("timeTextBox")
+const noteContentTB = document.getElementById("noteContentTB")
+const noteTimeTB = document.getElementById("noteTimeTB")
+
+setDefaultTime()
 
 function addNote() {
 
-    pushToDo()
+    pushNote()
     displayNoteList()
     clearForm()
 }
 
-function pushToDo() {
+function pushNote() {
 
-    const task = taskTextBox.value
-    const time = timeTextBox.value
+    const content = noteContentTB.value
+    const time = noteTimeTB.value
     const noteColor = getColor()
-    const note = {task, time, noteColor}
+    const note = {content, time, noteColor}
     if (isValidFields(note)) {
         noteList.push(note)
     }
@@ -25,26 +27,30 @@ function pushToDo() {
 }
 
 function displayNoteList() {
-
     const containerDiv = document.getElementById("containerDiv")
-    let dynamicDivInstance = ""
+
+
+    let dynamicNoteCardDiv = ""
     for (let i = 0; i < noteList.length; i++) {
         const randColor = noteList[i].noteColor
         const noteCard =
             `
             <div class="card" style="background-color: ${randColor}">
-        
             <span class="bi bi-trash" onclick="deleteNote(${i})"></span>
            
-            <div class="noteContent">${noteList[i].task}</div>
+            <div class="noteContent">${noteList[i].content}</div>
            
            <p class="timeContainer"> ${parseTime(noteList[i].time)} </p>
-            
+        
 </div> 
             `
-        dynamicDivInstance += noteCard
+        dynamicNoteCardDiv += noteCard
     }
-    containerDiv.innerHTML = dynamicDivInstance
+    containerDiv.innerHTML = dynamicNoteCardDiv
+}
+
+if (noteList.length === 0) {
+    addEmptyNoteMessage()
 }
 
 function deleteNote(note) {
@@ -55,54 +61,68 @@ function deleteNote(note) {
 
 
 function clearForm() {
-    taskTextBox.value = ""
-    timeTextBox.value = ""
-    taskTextBox.focus()
+    noteContentTB.value = ""
+    noteTimeTB.value = ""
+    setDefaultTime()
+    noteContentTB.focus()
 }
 
 function saveAndUpdateNote() {
     const json = JSON.stringify(noteList)
-    localStorage.setItem("todolist", json)
+    localStorage.setItem("noteList", json)
 }
 
 function loadNote() {
-    const json = localStorage.getItem("todolist")
+    const json = localStorage.getItem("noteList")
     if (json) {
         noteList = JSON.parse(json)
     }
     displayNoteList()
 }
 
-function isValidFields(todo) {
-    return todo.task !== "" && todo.time.toString().trim() !== ""
+function isValidFields(note) {
+    return note.content !== "" && note.time.toString().trim() !== ""&& note.time !== defaultTimeValue
 }
 
 loadNote();
 
-function parseTime(todoItemTime) {
-    return todoItemTime.replace('T', ' ')
+function parseTime(time) {
+    return time.replace('T', ' ')
 }
 
 function getColor() {
     const colorNames = [
-        `lavenderblush`, // soft pink
-        `salmon`, // warm pink-orange
-        `lightsalmon`, // orange tint
-        `lightcoral`, // muted red
-        `gold`, // warm yellow
-        `khaki`, // dusty yellow
-        `palegreen`, // fresh green
-        `mediumaquamarine`, // teal green
-        `powderblue`, // light blue
-        `lightsteelblue`, // cool blue-gray
-        `skyblue`, // clear light blue
-        `plum`, // soft purple
-        `thistle`, // light purple
-        `lightpink`, // soft pink
-        `peachpuff`, // peachy
-        `honeydew` // pale mint
+        `lavenderblush`,
+        `salmon`,
+        `lightsalmon`,
+        `lightcoral`,
+        `gold`,
+        `khaki`,
+        `palegreen`,
+        `mediumaquamarine`,
+        `powderblue`,
+        `lightsteelblue`,
+        `skyblue`,
+        `plum`,
+        `thistle`,
+        `lightpink`,
+        `peachpuff`,
+        `honeydew`
     ]
 
     let i = Math.floor(Math.random() * 16)
     return colorNames[i]
+}
+
+function setDefaultTime() {
+    const now = new Date();
+    const timezoneOffset = now.getTimezoneOffset()
+    const localTime = new Date(now.getTime() - (timezoneOffset * 60000))
+    const formattedTime = localTime.toISOString().slice(0, 16)
+    noteTimeTB.value = formattedTime
+    defaultTimeValue = formattedTime
+}
+
+function addEmptyNoteMessage() {
+
 }

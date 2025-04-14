@@ -31,26 +31,39 @@
     </div>
 </header>
 
-<div id="contentForm">
-    <form method="dialog" onsubmit="addNote()">
-        <textarea placeholder="New Task" id="taskTextBox"></textarea>
 
-        <label>Enter Date & Time: </label>
-        <input type="datetime-local" id="timeTextBox">
+<form method="dialog" onsubmit="addNote()">
+    <div id="noteInputForm">
+        <textarea placeholder="New Note" id="noteContentTB"></textarea>
 
+        <div id="enterTimeContainer">
+            <label>
+                <i class="bi bi-clock-history"></i>
+                 Set Target Time
+            </label>
+            <input type="datetime-local" id="noteTimeTB">
+        </div>
 
         <button class="addBtn">
-            <i class="bi bi-plus"></i>
-            Add
+            <i class="bi bi-plus-circle"></i>
+            Add Note
         </button>
 
-    </form>
-</div>
+        <button type="reset" class="clearFormBtn" onclick="setDefaultTime()">
+            <i class="bi bi-x-circle-fill"></i>
+            Clear
+        </button>
+    </div>
+</form>
+
 
 <div id="containerDiv"></div>
-
+<h2 id="emptyStateMessage"></h2>
 </body>
 <footer>
 
 </footer>
 </html>
+
+<!--class="."-->
+<!--id="#"-->
